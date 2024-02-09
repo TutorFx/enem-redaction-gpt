@@ -33,10 +33,10 @@ export default defineEventHandler(async (event) => {
         messages: [
           {
             role: "system",
-            content: `Responda em um formato JSON, seguindo a seguinte tipagem:
+            content: `Responda em um formato JSON (RFC 8259), seguindo a seguinte tipagem:
               """
               type Fields = "dominio_lingua" | "compreensao_proposta" | "estruturacao" | "articulacao" | "proposta_intervencao"
-  
+              type Grade = number // min 0 max 5
               interface OpenaiJsonResponse {
                 recomendations: string,
                 insights: {
@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
                 }[],
                 reportcard: {
                   field: Fields,
-                  grade: number
+                  grade: Grade
                 }[]
               }
               """
