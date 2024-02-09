@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
             content: `Responda em um formato JSON (RFC 8259), seguindo a seguinte tipagem:
               """
               type Fields = "dominio_lingua" | "compreensao_proposta" | "estruturacao" | "articulacao" | "proposta_intervencao"
-              type Grade = number // min 0 max 5
+              type Grade = number // min 0 max 200
               interface OpenaiJsonResponse {
                 recomendations: string,
                 insights: {
@@ -56,8 +56,8 @@ export default defineEventHandler(async (event) => {
             content: [
               {
                 type: "text",
-                text: `Baseado no seguinte texto, faça uma análise breve do desempenho do autor, levando em conta
-                    os seguintes fatores: ${rules.toLocaleString()}.
+                text: `Baseado no seguinte texto, faça uma análise breve do desempenho do autor (estudante do ensino médio), 
+                    levando em conta os seguintes fatores: ${rules.toLocaleString()}.
                     """
                     ${body.redaction}
                     """
