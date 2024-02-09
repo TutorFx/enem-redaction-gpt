@@ -33,7 +33,9 @@
         </div>
       </div>
       <div v-else-if="Step == Steps.Result">
-
+        <div>
+          {{ analysis }}
+        </div>
       </div>
     </div>
   </div>
@@ -41,11 +43,12 @@
 
 <script setup lang="ts">
   import type { ITextAnalysis } from '@/server/utils/schemas'
-  import type { OpenaiResponse } from '~/types';
+  import type { OpenaiJsonResponse, OpenaiResponse } from '~/types';
 
   const redaction = ref("")
   const proposal = ref("")
   const toggle = ref(false)
+  const analysis = ref<OpenaiJsonResponse | null>(null)
 
   enum Steps {
     ChooseInput,
@@ -58,13 +61,16 @@
   const files = ref<File[]>([])
 
   const sendText = async () => {
-    await $fetch("/api/text-analysis", {
+    const response = await $fetch<OpenaiResponse>("/api/text-analysis", {
       method: "POST",
       body: {
         redaction: redaction.value,
         proposal: toggle.value ? proposal.value : null
       } as ITextAnalysis
-    })
+    });
+
+    analysis.value = useAiContent(response.choices.at(0)?.message.content ?? "")
+    Step.value = Steps.Result
   }
 
   watch(() => files.value.length, (len) => {
