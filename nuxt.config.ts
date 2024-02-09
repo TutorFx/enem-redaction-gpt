@@ -48,6 +48,14 @@ export default defineNuxtConfig({
     densities: [1, 2],
   },
 
+  nitro: {
+    vercel: {
+      functions: {
+        maxDuration: 300,
+      }
+    }
+  },
+
   devtools: { enabled: true },
 
   eslint: {
