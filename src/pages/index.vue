@@ -50,6 +50,20 @@
             </div>
           </div>
         </div>
+        <div class="grid gap-3">
+          <div
+            v-for="(item, i) in analysis.insights" :key="i"
+            class="border-2 border-dashed border-blue-200 p-4">
+            <div class="grid grid-cols-[1fr_max-content]">
+              <div>
+                {{ item.field }}
+              </div>
+              <div>
+                {{ item.message }}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
